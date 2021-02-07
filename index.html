@@ -140,13 +140,19 @@
                 mesh.children[5].rotateY(0.75*inputSpeed);
             }
             
+            function NoAnimation() {
+                mesh.children[9].rotateY(0);
+                mesh.children[5].rotateY(0);
+            }
+            
             function ShowAnimation(){
                 if(i == 0){
+                    clearInterval(animation)
                     animation = setInterval(BaseAnimation, 25);
                     i++;
                 }
                 else if(i == 1){
-                    animation = setInterval(BaseAnimation, 0);
+                    clearInterval(animation)
                     i--;
                 }
             }
