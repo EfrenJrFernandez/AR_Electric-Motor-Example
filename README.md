@@ -1,4 +1,4 @@
-# Single Phase Shell Type Transformer
+# Electric Motor Example
 **Ver 1.0.0**
 
 The following example portrays a 3D model of an electric motor.
