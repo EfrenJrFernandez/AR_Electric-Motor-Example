@@ -36,54 +36,44 @@
             }
             
             .collapsible:after {
-                content: '\02795'; /* Unicode character for + */
+                content: 'OFF'; /* Unicode character for + */
                 font-size: 13px;
                 color: white;
-                float: left;
+                float: right;
                 margin-left: 5px;
             }
             
             .active:after {
-                content: "\2796"; /*Unicode character for - */
+                content: "ACTIVE"; /*Unicode character for - */
             }
             
             
         </style>
     </head>
+    <body>
         <!-- A collapsable Menu that provides some information -->
         <div align="center" style='position: fixed; top: 10px; width:100%; text-align: left; z-index: 1;'>
-            <button class="collapsible" align="left">Instructions</button>
+            <button class="collapsible" align="left">Display Instructions:</button>
             <div class = "content">
                 <ol style = "font-size: 12px" align="left">
                     <li>If you are using a device with a small screen (e.g. Smartphone) please put it on landscape</li>
                     
                     <li>You may freely rotate the model by tapping it</li>
-                    
-                    <li>Note that the core is intentinally seperated to illustrate the seperate layers of iron</li>
                 </ol>
-                
             </div>
             
-            <button class="collapsible" align="center" onclick = ShowCore()>What does the core look like?</button>
-            <div class="content">
-                <p style = "font-size: 12px">Please take some time to look at the model. Notice that the core contains thin slices of iron which are laminated, or in other words the thin sheets of iron which are glued together instead of being a solid block to reduce the Eddy currents (a form of core loss) inside the core.</p>
-                
-                <img src = "images/Eddy-Current-Illustration.gif" alt="An illustration of Eddy currents in a laminated vs not laminated core from: https://www.electronics-tutorials.ws/transformer/transformer-construction.html" width = "150">
-            </div>
-            
-            <button class="collapsible" align="center">Why is the Core Shaped like this?</button>
-            <div class ="content">
-                <p style = "font-size: 12px">
-                    The Core is laminated with pieces of iron that are shaped as E's and I's to reduce the high reluctance at the joints. Additionally this construction will also makes manufacturing the core much easier.
-                </p>
-            </div>
-            
-            <button class = "collapsible" align = "center" onclick = ShowBobbin()> Why do we need a Bobbin?</button>
+            <button class = "collapsible" align = "center" onclick = ShowAnimation()>Show Animation</button>
             <div class = "content">
-                <p style = "font-size: 12px">
-                    The bobbin acts as a permanent container for the wires to allow it to form the shape of the coil. It also provides a place to form a termination of the wires.
-                </p>
+                Please set the slider to begin the animation.
+                <input type=range id="speed" min=0 max=0.1 step=0.001 value=0.05 />
+                <span id="sText">0.50</span>
             </div>
+                
+            
+            <button class = "collapsible" align = "center" onclick = ShowInside()>Show Internal Components:</button>
+            
+            
+            
         </div>
         
         <a-scene
@@ -143,37 +133,52 @@
             }
             
             <!-- Function to show and hide the meshes -->
-            var i =0;
-            function ShowCore() {
-                if (i == 0){
-                    mesh.children[0].visible = false;
-                    mesh.children[2].visible = false;
+            var i = 0;
+            var animation;
+            function BaseAnimation() {
+                mesh.children[9].rotateY(0.75*inputSpeed);
+                mesh.children[5].rotateY(0.75*inputSpeed);
+            }
+            
+            function ShowAnimation(){
+                if(i == 0){
+                    animation = setInterval(BaseAnimation, 25);
                     i++;
                 }
-                
                 else if(i == 1){
-                    mesh.children[0].visible = true;
-                    mesh.children[2].visible = true;
+                    animation = setInterval(BaseAnimation, 0);
                     i--;
                 }
             }
             
-            var j =0;
-            function ShowBobbin(){
-                if (j == 0){
-                    mesh.children[1].visible = false;
+            
+            var j = 1; //Initialize as hiding the internals
+            function ShowInside() {
+                if (j == 1) {
                     mesh.children[2].visible = false;
-                    j++;
-                }
-                
-                else if(j == 1){
-                    mesh.children[1].visible = true;
-                    mesh.children[2].visible = true;
+                    mesh.children[6].visible = false;
                     j--;
                 }
+                else if(j == 0){
+                    mesh.children[2].visible = true;
+                    mesh.children[6].visible = true;
+                    j++;
+                }
             }
+                
+            //This function updates the text and variables
+            function update(){
+                inputSpeed = parseFloat(document.getElementById('speed').value) //update the inputSpeed variable
+                document.getElementById('sText').innerHTML = (inputSpeed/0.1).toFixed(2)
+            }
+            
+            //LISTENS FOR ANY INPUT AND RUNS THE update() FUNCTION
+            document.getElementById("speed").addEventListener("input",update)                      
+
+                                 
         </script>
         
+    <!-- Allows us to identify the different meshes -->
         <script type="text/javascript">
             gltf = document.querySelector('#bowser-model');
             var scene = document.querySelector('a-scene');
