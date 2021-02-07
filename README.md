@@ -1,7 +1,7 @@
 # Single Phase Shell Type Transformer
 **Ver 1.0.0**
 
-The following example portrays a 3D model of a single phase shell type transformer as well as some information regarding its design.
+The following example portrays a 3D model of an electric motor.
 
 
 To access the example please scan the following QR code:
