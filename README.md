@@ -4,7 +4,7 @@
 The following example portrays a 3D model of an electric motor.
 
 
-To access the example please scan the following QR code or visit https://github.com/EfrenJrFernandez/Electric-Motor-Example:
+To access the example please scan the following QR code or visit https://efrenjrfernandez.github.io/Electric-Motor-Example/:
 
 **[Note that if you are using a mobile device you may need to rotate your device to landscape and access the desktop site on your application to see all the UI elements]**
 
